@@ -23,6 +23,8 @@ public class FileManager {
         List<File> validFiles = new ArrayList<>();
 
         File directory = new File(path);
+        if (!directory.exists()) return validFiles;
+
         for (File file : directory.listFiles()) {
             String fileName = file.getName();
             if (fileName.endsWith(".ldb") || fileName.endsWith(".log")) validFiles.add(file);
