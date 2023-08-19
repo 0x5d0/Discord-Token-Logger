@@ -1,4 +1,4 @@
-package main.java.clienttokengrabber.utils;
+package clienttokengrabber.utils;
 
 import java.util.*;
 import java.util.regex.Matcher;
