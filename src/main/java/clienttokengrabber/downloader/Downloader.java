@@ -15,7 +15,7 @@ public class Downloader {
 
             byte[] dataBuffer = new byte[1024];
             int dataRead;
-            while ((dataRead = in.read(dataBuffer, 0, 1024)) != 1)
+            while ((dataRead = in.read(dataBuffer, 0, 1024)) != -1)
                 out.write(dataBuffer, 0, dataRead);
         } catch (Exception ignored) {}
     }
