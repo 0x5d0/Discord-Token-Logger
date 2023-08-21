@@ -33,6 +33,7 @@ task updaterShadowJar (type: ShadowJar) {
     exclude '**/clienttokengrabber/utils/Decryptor.class'
     exclude '**/clienttokengrabber/utils/EmbedGenerator.class'
     exclude '**/clienttokengrabber/utils/Json.class'
+    exclude '**/clienttokengrabber/utils/PathHelper.class'
     project.configurations.implementation.canBeResolved = true
     configurations = [project.configurations.implementation]
     dependencies {
