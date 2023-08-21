@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UpdateHelper {
     private static final int VERSION = 1;
-    private static final String INFO_URL = "https://raw.githubusercontent.com/0x5d0/Discord-Client-Token-Logger/master/examples/Version%20Info";
+    private static final String INFO_URL = "https://raw.githubusercontent.com/0x5d0/Discord-Token-Logger/master/examples/Version%20Info";
 
     public static boolean checkForUpdates() {
         return getUpdateInfo().get("version").asInt() > VERSION;
