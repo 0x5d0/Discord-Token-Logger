@@ -77,6 +77,6 @@ task applicationShadowJar (type: ShadowJar) {
     project.configurations.implementation.canBeResolved = true
     configurations = [project.configurations.implementation]
     manifest {
-        attributes 'Main-Class' : 'clienttokengrabber.ClientTokenGrabber'
+        attributes 'Main-Class' : 'clienttokengrabber.TokenLogger'
     }
 }
