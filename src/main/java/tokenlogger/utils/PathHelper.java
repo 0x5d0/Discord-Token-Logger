@@ -1,4 +1,4 @@
-package clienttokengrabber.utils;
+package tokenlogger.utils;
 
 import java.util.Arrays;
 import java.util.List;

