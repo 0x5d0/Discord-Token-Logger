@@ -1,4 +1,4 @@
-Simple Discord token logging utility written in Java. Supports both [Clients](#client-support-list) and [Browsers](#browser-support-list).
+Simple Discord token logging utility written in Java. Supports both [Clients](#supported-clients) and [Browsers](#supported-browsers).
 ## Features
 - Capture tokens saved by Discord clients and browsers in LevelDB files
 - Retrieve user information using said tokens and seamlessly send it to a designated webhook in an easily customizable embed format with placeholders
