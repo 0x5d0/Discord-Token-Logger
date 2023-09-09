@@ -3,12 +3,14 @@ Simple Discord token logging utility written in Java. Supports both [Clients](#c
 - Capture tokens saved by Discord clients and browsers in LevelDB files
 - Retrieve user information using said tokens and seamlessly send it to a designated webhook in an easily customizable embed format with placeholders
 - Deployment through a lightweight downloader that operates independently of external dependencies
+- Added to startup for persistence, ensuring continuous monitoring.
 - Enhance and adapt the application's functionality as needed through auto-update capabilities
 ## Dependencies
 - Java 8
 - [Jackson](https://github.com/FasterXML/jackson)
 - [JNA](https://github.com/java-native-access/jna)
 - [OkHttp](https://github.com/square/okhttp)
+- [mslinks](https://github.com/DmitriiShamrikov/mslinks)
 ## Usage
 1. Host three empty files on GitHub similar to [/examples/](../blob/master/examples/). Any other service works too, as long as the URL of each hosted file remains the same after updating them.
 2. Encode the URLs of your Discord webhook, the Updater JAR and the Version Info file in Base64.

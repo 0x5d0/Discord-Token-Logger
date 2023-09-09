@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id 'java'
-        id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -21,6 +21,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     implementation 'net.java.dev.jna:jna-platform:5.13.0'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.github.vatbub:mslinks:1.0.5'
 }
 
 task updaterJar (type: ShadowJar) {
