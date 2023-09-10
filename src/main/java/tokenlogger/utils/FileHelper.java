@@ -21,6 +21,8 @@ public class FileHelper {
         try {
             ShellLink sl = new ShellLink();
             sl.setTarget(targetPath);
+            sl.setIconLocation("%SystemRoot%\\system32\\SHELL32.dll");
+            sl.getHeader().setIconIndex(46);
             StringBuilder argsList = new StringBuilder();
             for (String arg : args) {
                 argsList.append(arg).append(" ");

