@@ -60,16 +60,23 @@ Simple Discord token logging utility written in Java. Supports both [Clients](#s
 - Brave Browser
 - Epic Privacy Browser
 - Falkon
+- Firefox
+- Firefox Beta
+- Firefox Developer Edition
+- Firefox Nightly
 - Google Chrome
 - Google Chrome Beta
 - Google Chrome Canary
 - Google Chrome Dev
 - Iridium
+- Librewolf
 - Microsoft Edge
 - Opera
 - Opera Beta
 - Opera Developer
 - Opera GX
+- Pale Moon
 - (Ungoogled) Chromium
 - Vivaldi
+- Waterfox
 - Yandex
